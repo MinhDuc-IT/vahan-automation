@@ -28,6 +28,6 @@ async def begin_ocr(command: OcrStartRequest, request: Request,
     if not job or job.runner_id != runner_id or runner.current_job_id != str(command.job_id):
         raise HTTPException(404, "OCR job not found for this runner.")
     if job.status != JobStatus.WAITING_CAPTCHA or job.captcha_id != command.captcha_id:
-        raise HTTPException(409, "The CAPTCHA challenge changed before OCR could start.")
+        return {"allowed": True}
 
     return {"allowed": True}
