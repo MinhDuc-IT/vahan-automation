@@ -51,7 +51,7 @@ async def run_details(connection, session_ids):
     result = {}
     for row in rows:
         values = {name: row[name] or 0 for name in ('withData', 'noData', 'failed', 'pending', 'running')}
-        processed = values['withData'] + values['noData'] + values['failed']
+        processed = values['withData'] + values['noData']
         complete = processed == row['total'] and (not row['failed'] or row['retry_phase'] in (None, 'DONE'))
         status = ('COMPLETED_WITH_ERRORS' if values['failed'] else 'COMPLETED') if complete else row['status']
         result[row['session_id']] = {**values, 'totalCases': row['total'], 'processed': processed,
