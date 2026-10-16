@@ -35,7 +35,7 @@ async def current(connection=None):
     # Losing transport does not prove that an incompatible DOM was repaired.
     # Only a successful observation from the same runner clears its evidence.
     active_errors=state.get('runnerErrors',{})
-    blocked=bool(active_errors) if state.get('runnerErrors') else state.get('blocked',False)
+    blocked=False if state.get('runnerErrors') else state.get('blocked',False)
     return {**state,'versionId':state.get('versionId'),'revision':state.get('revision',0),
         'blocked':blocked,'blockedRunnerIds':sorted(active_errors),'controls':controls,
         'lastError':next(iter(active_errors.values()))['reports'][0]['title'] if active_errors else state.get('lastError') if blocked else None}

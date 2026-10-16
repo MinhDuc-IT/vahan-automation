@@ -52,7 +52,7 @@ class FilterProfileRepository:
                     db.filter_profiles.c.id == str(profile_id)).values(**values).returning(db.filter_profiles))
             else:
                 result = await connection.execute(insert(db.filter_profiles).values(
-                    id=str(uuid4()), owner_username=owner, created_at=now(), revision=1, **values)
+                    id=str(uuid4()), owner_username=owner, created_at=now(), revision=2, **values)
                     .returning(db.filter_profiles))
             return document(result.mappings().one())
 
